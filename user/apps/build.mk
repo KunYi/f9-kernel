@@ -4,8 +4,8 @@
 
 user-apps-dirs = \
 	l4test \
-	pingpong
-
+	pingpong \
+	hello
 
 ifdef CONFIG_EXTI_INTERRUPT_TEST
 user-apps-dirs += \
@@ -16,3 +16,4 @@ user-apps-dirs += \
 	lcd_test
 endif
 endif
+

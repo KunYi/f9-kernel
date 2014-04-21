@@ -2,7 +2,5 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-user-apps-dirs = \
-	l4test \
-	pingpong \
-	hello
+user-apps-hello-y = \
+	main.o

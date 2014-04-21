@@ -20,15 +20,10 @@ static L4_Word_t free_mem __USER_DATA;
 __USER_TEXT
 void hello_thread(void)
 {
-	int i =0;
-	while(1) {
-		if (i == 0) {
-			printf("hello world\r\n");
-		}
-
-		if (i++ > 50000) {
-			i = 0;
-		}
+	while (1)
+	{
+		printf("hello world!\r\n");
+		L4_Sleep(L4_TimePeriod(10*1000));
 	}
 }
 

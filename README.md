@@ -146,6 +146,18 @@ or (for 32F429IDISCOVERY):
 * USB2TTL RX ---> PC11 / PD5 / PA9
 * USB2TTL TX ---> PC10 / PD6 / PA10
 
+For NUCLEO-F429ZI, KDB is operated via USART3, which is directly connected
+to the on-board ST-LINK Virtual COM Port (VCOM).
+No external USB-to-TTL converter is required.
+
+The default pin configuration is:
+
+* USART3: PD8 (TX), PD9 (RX) (default config)
+
+The serial console is available through the ST-LINK USB connection.
+Simply connect the board to the host PC via the ST-LINK USB port and
+open the corresponding VCOM device with a serial terminal.
+
 Select the appropriate terminal emulator and configure it for 115200 baud,
 8 data bits, no parity, one stop bit. For GNU/Linux, program `screen` can be
 used for such purpose. Installation on Ubuntu / Debian based systems:

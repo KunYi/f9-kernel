@@ -22,6 +22,12 @@ config BOARD_STM32F429DISCOVERY
 	help
 	  STM32F429 Discovery board with STM32F429ZIT6 MCU and LCD.
 
+config BOARD_STM32F429NUCLEO
+	bool "STM32F429 Nucleo"
+	select PLATFORM_STM32F429
+	help
+	  STM32F429 Nucleo board with STM32F429ZIT6 MCU.
+
 config BOARD_STM32P103
 	bool "Olimex STM32-P103"
 	select PLATFORM_STM32F1

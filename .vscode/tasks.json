@@ -1,0 +1,20 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "download f9",
+            "type": "shell",
+            "command": "st-flash",
+            "args": [
+                "--connect-under-reset",
+                "--format=binary",
+                "--freq=4000k",
+                "write",
+                "${workspaceFolder}/build/nucleof429/f9.bin",
+                "0x8000000"
+            ]
+        }
+    ]
+}

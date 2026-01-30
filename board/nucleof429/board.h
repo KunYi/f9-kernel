@@ -56,4 +56,14 @@ extern struct usart_dev console_uart;
 
 #endif
 
+/* Ethernet interface */
+#define BOARD_ETH_MAC_ADDR0 0x00
+#define BOARD_ETH_MAC_ADDR1 0x80
+#define BOARD_ETH_MAC_ADDR2 0xE1
+#define BOARD_ETH_MAC_ADDR3 0x00
+#define BOARD_ETH_MAC_ADDR4 0x00
+#define BOARD_ETH_MAC_ADDR5 0x01
+
+/* Ethernet RMII */
+
 #endif /* NUCLEO_F429_BOARD_H_ */

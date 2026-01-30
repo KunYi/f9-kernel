@@ -89,6 +89,14 @@ config SCB_MOCK
 
 	  For full SCB validation, test on real hardware with actual SCB.
 
+config HAS_ETHERNET
+	bool "Ethernet interface"
+	depends on PLATFORM_STM32F429
+	default y if BOARD_STM32F429NUCLEO
+	help
+	  Enable Ethernet interface support for boards that have Ethernet PHY.
+	  This enables initialization of RMII pins and Ethernet controller.
+
 endmenu
 
 # Platform symbols (selected by board choice)
@@ -97,3 +105,4 @@ config PLATFORM_STM32F4
 
 config PLATFORM_STM32F429
 	bool
+

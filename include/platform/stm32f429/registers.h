@@ -86,8 +86,8 @@
 #define DMA1_BASE (AHB1PERIPH_BASE + 0x6000)  /* DMA1 base address */
 #define DMA2_BASE (AHB1PERIPH_BASE + 0x6400)  /* DMA2 base address */
 #define DMA2D_BASE (AHB1PERIPH_BASE + 0xB000) /* DMA2D base address */
+#define ETH_BASE (AHB1PERIPH_BASE + 0x8000)   /* Ethernet MAC base address */
 #define USB_FS_BASE (AHB2PERIPH_BASE + 0x0000) /* USB OTG FS base address */
-
 
 /* Timer 1 (TIM1) */
 #define TIM1_CR1 \
@@ -349,6 +349,10 @@
 #define SYSCFG_CMPCR                     \
     (volatile uint32_t *) (SYSCFG_BASE + \
                            0x20) /* Compensation cell control register*/
+
+#define SYSCFG_PMC_MII_RMII_SEL_Pos 23
+#define SYSCFG_PMC_MII_RMII_SEL_Msk (1U << SYSCFG_PMC_MII_RMII_SEL_Pos)
+#define SYSCFG_PMC_MII_RMII_SEL SYSCFG_PMC_MII_RMII_SEL_Msk
 
 
 
@@ -1997,5 +2001,547 @@
 #define LTDC_Layer_CFBLNR(layer)                    \
     (volatile uint32_t *) (LTDC_Layer_BASE(layer) + \
                            0x30) /* Color Frame Buffer Line Number Register */
+
+/* Ethernet MAC Registers */
+#define ETH_MACCR \
+    (volatile uint32_t *) (ETH_BASE + 0x0000) /* MAC configuration register */
+#define ETH_MACFFR \
+    (volatile uint32_t *) (ETH_BASE + 0x0004) /* MAC frame filter register */
+#define ETH_MACHTHR                                                           \
+    (volatile uint32_t *) (ETH_BASE + 0x0008) /* MAC hash table high register \
+                                               */
+#define ETH_MACHTLR                                                          \
+    (volatile uint32_t *) (ETH_BASE + 0x000C) /* MAC hash table low register \
+                                               */
+#define ETH_MACMIIAR \
+    (volatile uint32_t *) (ETH_BASE + 0x0010) /* MAC MII address register */
+#define ETH_MACMIIDR \
+    (volatile uint32_t *) (ETH_BASE + 0x0014) /* MAC MII data register */
+#define ETH_MACFCR \
+    (volatile uint32_t *) (ETH_BASE + 0x0018) /* MAC flow control register */
+#define ETH_MACVLANTR \
+    (volatile uint32_t *) (ETH_BASE + 0x001C) /* MAC VLAN tag register */
+#define ETH_MACRWUFFR                 \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0028) /* MAC remote wakeup filter register */
+#define ETH_MACPMTCSR                 \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x002C) /* MAC PMT control and status register */
+#define ETH_MACDBGR \
+    (volatile uint32_t *) (ETH_BASE + 0x0034) /* MAC debug register */
+#define ETH_MACSR                     \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0038) /* MAC interrupt status register */
+#define ETH_MACIMR                                                           \
+    (volatile uint32_t *) (ETH_BASE + 0x003C) /* MAC interrupt mask register \
+                                               */
+#define ETH_MACA0HR                                                          \
+    (volatile uint32_t *) (ETH_BASE + 0x0040) /* MAC address 0 high register \
+                                               */
+#define ETH_MACA0LR \
+    (volatile uint32_t *) (ETH_BASE + 0x0044) /* MAC address 0 low register */
+#define ETH_MACA1HR                                                          \
+    (volatile uint32_t *) (ETH_BASE + 0x0048) /* MAC address 1 high register \
+                                               */
+#define ETH_MACA1LR \
+    (volatile uint32_t *) (ETH_BASE + 0x004C) /* MAC address 1 low register */
+#define ETH_MACA2HR                                                          \
+    (volatile uint32_t *) (ETH_BASE + 0x0050) /* MAC address 2 high register \
+                                               */
+#define ETH_MACA2LR \
+    (volatile uint32_t *) (ETH_BASE + 0x0054) /* MAC address 2 low register */
+#define ETH_MACA3HR                                                          \
+    (volatile uint32_t *) (ETH_BASE + 0x0058) /* MAC address 3 high register \
+                                               */
+#define ETH_MACA3LR \
+    (volatile uint32_t *) (ETH_BASE + 0x005C) /* MAC address 3 low register */
+
+/* Ethernet MMC Registers */
+#define ETH_MMCCR \
+    (volatile uint32_t *) (ETH_BASE + 0x0100) /* MMC control register */
+#define ETH_MMCRIR                    \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0104) /* MMC receive interrupt register */
+#define ETH_MMCTIR                    \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0108) /* MMC transmit interrupt register */
+#define ETH_MMCRIMR                   \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x010C) /* MMC receive interrupt mask register */
+#define ETH_MMCTIMR                   \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0110) /* MMC transmit interrupt mask register */
+#define ETH_MMCTGFSCCR                                                    \
+    (volatile uint32_t *) (ETH_BASE +                                     \
+                           0x014C) /* MMC transmitted good frames after a \
+                                      single collision counter register */
+#define ETH_MMCTGFMSCCR                                                        \
+    (volatile uint32_t                                                         \
+         *) (ETH_BASE + 0x0150) /* MMC transmitted good frames after more than \
+                                   a single collision counter register */
+#define ETH_MMCTGFCR                                                         \
+    (volatile uint32_t *) (ETH_BASE + 0x0168) /* MMC transmitted good frames \
+                                                 counter register */
+#define ETH_MMCRFCECR                                                         \
+    (volatile uint32_t *) (ETH_BASE + 0x0194) /* MMC received frames with CRC \
+                                                 error counter register */
+#define ETH_MMCRFAECR                                                          \
+    (volatile uint32_t *) (ETH_BASE +                                          \
+                           0x0198) /* MMC received frames with alignment error \
+                                      counter register */
+#define ETH_MMCRGUFCR                                                      \
+    (volatile uint32_t *) (ETH_BASE + 0x01C4) /* MMC received good unicast \
+                                                 frames counter register */
+
+/* Ethernet PTP Registers */
+#define ETH_PTPTSCR                   \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0700) /* PTP time stamp control register */
+#define ETH_PTPSSIR                   \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0704) /* PTP sub-second increment register */
+#define ETH_PTPTSHR                                                           \
+    (volatile uint32_t *) (ETH_BASE + 0x0708) /* PTP time stamp high register \
+                                               */
+#define ETH_PTPTSLR                                                          \
+    (volatile uint32_t *) (ETH_BASE + 0x070C) /* PTP time stamp low register \
+                                               */
+#define ETH_PTPTSHUR                  \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0710) /* PTP time stamp high update register */
+#define ETH_PTPTSLUR                  \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0714) /* PTP time stamp low update register */
+#define ETH_PTPTAR                    \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0718) /* PTP time stamp addend register */
+#define ETH_PTPTTSR                   \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x071C) /* PTP target time seconds register */
+#define ETH_PTPTTSLR                  \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0720) /* PTP target time sub-seconds register */
+#define ETH_PTPTSSR                   \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x0724) /* PTP time stamp status register */
+#define ETH_PTPPPSCR \
+    (volatile uint32_t *) (ETH_BASE + 0x0728) /* PTP PPS control register */
+
+/* Ethernet DMA Registers */
+#define ETH_DMABMR \
+    (volatile uint32_t *) (ETH_BASE + 0x1000) /* DMA bus mode register */
+#define ETH_DMATPDR                   \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x1004) /* DMA transmit poll demand register */
+#define ETH_DMARPDR                   \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x1008) /* DMA receive poll demand register */
+#define ETH_DMARDLAR                                                         \
+    (volatile uint32_t *) (ETH_BASE + 0x100C) /* DMA receive descriptor list \
+                                                 address register */
+#define ETH_DMATDLAR                                                          \
+    (volatile uint32_t *) (ETH_BASE + 0x1010) /* DMA transmit descriptor list \
+                                                 address register */
+#define ETH_DMASR \
+    (volatile uint32_t *) (ETH_BASE + 0x1014) /* DMA status register */
+#define ETH_DMAOMR                                                           \
+    (volatile uint32_t *) (ETH_BASE + 0x1018) /* DMA operation mode register \
+                                               */
+#define ETH_DMAIER                    \
+    (volatile uint32_t *) (ETH_BASE + \
+                           0x101C) /* DMA interrupt enable register */
+#define ETH_DMAMFBOCR                                                        \
+    (volatile uint32_t *) (ETH_BASE + 0x1020) /* DMA missed frame and buffer \
+                                                 overflow counter register */
+#define ETH_DMARSWTR                                                         \
+    (volatile uint32_t *) (ETH_BASE + 0x1024) /* DMA receive status watchdog \
+                                                 timer register */
+#define ETH_DMACHTDAR                                                      \
+    (volatile uint32_t *) (ETH_BASE + 0x1048) /* DMA current host transmit \
+                                                 descriptor register */
+#define ETH_DMACHRDR                                                      \
+    (volatile uint32_t *) (ETH_BASE + 0x104C) /* DMA current host receive \
+                                                 descriptor register */
+#define ETH_DMACHTBAR                                                      \
+    (volatile uint32_t *) (ETH_BASE + 0x1050) /* DMA current host transmit \
+                                                 buffer address register */
+#define ETH_DMACHRBAR                                                     \
+    (volatile uint32_t *) (ETH_BASE + 0x1054) /* DMA current host receive \
+                                                 buffer address register */
+
+/* MAC Configuration Register (ETH_MACCR) Bits - Offset: 0x00 */
+#define ETH_MACCR_RE \
+    (1U << 2) /* Receiver Enable: Enables the MAC receive state machine */
+#define ETH_MACCR_TE \
+    (1U << 3) /* Transmitter Enable: Enables the MAC transmit state machine */
+#define ETH_MACCR_DC                                               \
+    (1U << 4) /* Deferral Check: Periodic check of deferral during \
+                 transmission */
+#define ETH_MACCR_BL_MASK \
+    (3U << 5) /* Back-off Limit: Collision back-off limit mask */
+#define ETH_MACCR_APCS                                                   \
+    (1U << 7) /* Automatic Pad/CRC Stripping: Strips pad/CRC of received \
+                 frames */
+#define ETH_MACCR_RD \
+    (1U << 9) /* Retry Disable: Disables retransmission on collision */
+#define ETH_MACCR_IPCO                                                    \
+    (1U << 10) /* IPv4 Checksum Offload: Hardware calculates TCP/UDP/ICMP \
+                  checksums */
+#define ETH_MACCR_DM \
+    (1U << 11) /* Duplex Mode: 1 = Full-Duplex, 0 = Half-Duplex */
+#define ETH_MACCR_LM \
+    (1U << 12) /* Loopback Mode: MAC internal loopback for testing */
+#define ETH_MACCR_ROD                                                        \
+    (1U << 13) /* Receive Own Disable: 1 = Disables reception of transmitted \
+                  frames in half-duplex */
+#define ETH_MACCR_FES \
+    (1U << 14) /* Fast Ethernet Speed: 1 = 100 Mbps, 0 = 10 Mbps */
+#define ETH_MACCR_PS \
+    (1U << 15) /* Port Select: 0 = MII interface, 1 = RMII interface */
+#define ETH_MACCR_JD                                                       \
+    (1U << 22) /* Jabber Disable: Disables the 2048-byte limit for receive \
+                  frames */
+#define ETH_MACCR_WD                                                          \
+    (1U << 23) /* Watchdog Disable: Disables the 2048-byte limit for transmit \
+                  frames */
+#define ETH_MACCR_CST                                                         \
+    (1U << 25) /* CRC Stripping for Type frames: Strips CRC for Ethernet Type \
+                  frames */
+
+/* MAC Frame Filter Register (ETH_MACFFR) Bits - Offset: 0x04 */
+#define ETH_MACFFR_PM                                                         \
+    (1U << 0) /* Promiscuous Mode: Forwards all received frames regardless of \
+                 address */
+#define ETH_MACFFR_HU                                                        \
+    (1U << 1) /* Hash Unicast: Uses Hash table for unicast address filtering \
+               */
+#define ETH_MACFFR_HM                                                  \
+    (1U << 2) /* Hash Multicast: Uses Hash table for multicast address \
+                 filtering */
+#define ETH_MACFFR_DAIF                                                       \
+    (1U << 3) /* Destination Address Inverse Filtering: Inverts filter result \
+               */
+#define ETH_MACFFR_PAM \
+    (1U << 4) /* Pass All Multicast: Forwards all multicast frames */
+#define ETH_MACFFR_BFD                                                    \
+    (1U << 5) /* Broadcast Frames Disable: Filters all incoming broadcast \
+                 frames */
+#define ETH_MACFFR_PCF_POS (6) /* Pass Control Frames position */
+#define ETH_MACFFR_PCF_MASK                                                   \
+    (3U << ETH_MACFFR_PCF_POS) /* Pass Control Frames: Controls forwarding of \
+                                  MAC control frames */
+#define ETH_MACFFR_SAIF \
+    (1U << 8) /* Source Address Inverse Filtering: Inverts SA filter result */
+#define ETH_MACFFR_SAF \
+    (1U                \
+     << 9) /* Source Address Filter: Enables comparison of source addresses */
+#define ETH_MACFFR_HPF                                                      \
+    (1U << 10) /* Hash or Perfect Filter: Selects Hash or Perfect filtering \
+                  for multicast */
+#define ETH_MACFFR_RA \
+    (1U << 31) /* Receive All: Disables all filtering; receives all frames */
+
+/* MAC MII Address Register (ETH_MACMIIAR) Bits - Offset: 0x10 */
+#define ETH_MACMIIAR_MB                                                     \
+    (1U << 0) /* MII Busy: Set during read/write to PHY; software waits for \
+                 clear */
+#define ETH_MACMIIAR_MW \
+    (1U << 1) /* MII Write: 1 = Write to PHY, 0 = Read from PHY */
+#define ETH_MACMIIAR_CR_MASK                                          \
+    (7U << 2) /* Clock Range: Defines MDC clock divider based on HCLK \
+                 frequency */
+#define ETH_MACMIIAR_MR_POS \
+    (6) /* MII Register: Target PHY register address position */
+#define ETH_MACMIIAR_MR_MASK                                            \
+    (0x1FU << ETH_MACMIIAR_MR_POS) /* MII Register: Target PHY register \
+                                      address (0-31) */
+#define ETH_MACMIIAR_PA_POS \
+    (11) /* PHY Address: Target PHY device address position */
+#define ETH_MACMIIAR_PA_MASK                                                 \
+    (0x1FU << ETH_MACMIIAR_PA_POS) /* PHY Address: Target PHY device address \
+                                      (0-31) */
+
+/* MAC MII Address Register (ETH_MACMIIDR) Bits - Offset: 0x14 */
+#define ETH_MACMIIDR_MD_MASK \
+    (0xFFFF << 0) /* MII Data: Data to be written or read from PHY */
+
+/* MAC Flow Control Register (ETH_MACFCR) Bits - Offset: 0x18 */
+#define ETH_MACFCR_FCB                                                       \
+    (1U << 0) /* Flow Control Busy: Set to trigger a Pause frame (cleared by \
+                 HW) */
+#define ETH_MACFCR_TFE \
+    (1U                \
+     << 1) /* Transmit Flow Control Enable: Allows MAC to send Pause frames */
+#define ETH_MACFCR_RFE                                                      \
+    (1U << 2) /* Receive Flow Control Enable: Allows MAC to decode received \
+                 Pause frames */
+#define ETH_MACFCR_UP                                                     \
+    (1U << 3) /* Unicast Pause Frame Detect: Enables detection of unicast \
+                 pause frames */
+#define ETH_MACFCR_PLT_POS (4) /* Pause Low Threshold position */
+#define ETH_MACFCR_PLT_MASK                                                    \
+    (3U << ETH_MACFCR_PLT_POS) /* Pause Low Threshold: Threshold for releasing \
+                                  Flow Control */
+#define ETH_MACFCR_ZQPD                                                        \
+    (1U << 7) /* Zero-Quanta Pause Disable: Disables generation of zero-quanta \
+                 pause frames */
+#define ETH_MACFCR_PT_POS (16) /* Pause Time position */
+#define ETH_MACFCR_PT_MASK                                               \
+    (0xFFFFU << ETH_MACFCR_PT_POS) /* Pause Time: Time value used in the \
+                                      transmitted Pause frame */
+
+/* MAC Interrupt Status Register (ETH_MACSR) Bits - Offset: 0x38 */
+#define ETH_MACSR_PMTS                                                        \
+    (1U << 3) /* PMT status: Indicates that a power management event occurred \
+                 [1] */
+#define ETH_MACSR_MMCS (1U << 4) /* MMC status: indicates MMCRS or MMCTS */
+#define ETH_MACSR_MMCRS                                                   \
+    (1U << 5) /* MMC receive status: Indicates that a MMC receive counter \
+                 event occurred [1] */
+#define ETH_MACSR_MMCTS                                                     \
+    (1U << 6) /* MMC transmit status: Indicates that a MMC transmit counter \
+                 event occurred [1] */
+#define ETH_MACSR_TSTS                                                       \
+    (1U << 9) /* Timestamp status: Indicates that a timestamp event occurred \
+                 [1] */
+
+/* MAC Interrupt Mask Register (ETH_MACIMR) Bits - Offset: 0x3C */
+#define ETH_MACIMR_PMTIM                                                     \
+    (1U << 3) /* PMT Interrupt Mask: Masks Power Management Timer interrupts \
+               */
+#define ETH_MACIMR_TSTIM \
+    (1U << 9) /* Timestamp Interrupt Mask: Masks PTP timestamp interrupts */
+
+/* DMA Bus Mode Register (ETH_DMABMR) Bits - Offset: 0x1000 */
+#define ETH_DMABMR_SWR \
+    (1U << 0) /* Software Reset: Resets all MAC subsystem registers */
+#define ETH_DMABMR_DA                                                       \
+    (1U << 1) /* DMA Arbitration: 0 = Round-robin, 1 = Fixed priority (Rx > \
+                 Tx) */
+#define ETH_DMABMR_DSL_POS (2) /* Descriptor Skip Length position */
+#define ETH_DMABMR_DSL_MASK                                                   \
+    (0x1FU << ETH_DMABMR_DSL_POS) /* Descriptor Skip Length: Number of 32-bit \
+                                     words to skip between descriptors */
+#define ETH_DMABMR_EDFE                                                  \
+    (1U << 7) /* Enhanced Descriptor Format Enable: Enables enhanced DMA \
+                 descriptor format */
+#define ETH_DMABMR_PBL_POS (8) /* Programmable Burst Length position */
+#define ETH_DMABMR_PBL_MASK                                                   \
+    (0x3FU << ETH_DMABMR_PBL_POS) /* Programmable Burst Length: Max number of \
+                                     beats in a single DMA transfer */
+#define ETH_DMABMR_PM_POS \
+    (14) /* Priority Management: Rx Tx priority ratio position */
+#define ETH_DMABMR_PM_MASK                                                    \
+    (3U << 14) /* Priority Management: Rx Tx priority ratio, only when the DA \
+                  bit is cleared */
+#define ETH_DMABMR_FB \
+    (1U << 16) /* Fixed Burst: DMA uses fixed burst length (PBL) */
+#define ETH_DMABMR_RDP_POS (17) /* Rx DMA PBL position */
+#define ETH_DMABMR_RDP_MASK                                                   \
+    (0x3FU << ETH_DMABMR_RDP_POS) /* Rx DMA PBL: PBL specifically for Rx when \
+                                     USP is set */
+#define ETH_DMABMR_USP \
+    (1U << 23) /* Use Separate PBL: Enables independent PBL for Rx and Tx */
+#define ETH_DMABMR_FPM \
+    (1U << 24) /* 4xPBL Mode: Multiplies PBL/RPBL values by 4 */
+#define ETH_DMABMR_AAB                                                   \
+    (1U << 25) /* Address-Aligned Beats: Aligns DMA transfers to 32-byte \
+                  boundaries */
+#define ETH_DMABMR_MB \
+    (1U               \
+     << 26) /* Mixed Burst: Supports both fixed and undefined length bursts */
+/* Programmable Burst Length Values */
+#define ETH_DMABMR_PBL_1BEAT (1U << ETH_DMABMR_PBL_POS)
+#define ETH_DMABMR_PBL_2BEATS (2U << ETH_DMABMR_PBL_POS)
+#define ETH_DMABMR_PBL_4BEATS (4U << ETH_DMABMR_PBL_POS)
+#define ETH_DMABMR_PBL_8BEATS (8U << ETH_DMABMR_PBL_POS)
+#define ETH_DMABMR_PBL_16BEATS (16U << ETH_DMABMR_PBL_POS)
+#define ETH_DMABMR_PBL_32BEATS (32U << ETH_DMABMR_PBL_POS)
+/* Priority Management Values */
+#define ETH_DMABMR_PM_Rx1Tx1 (0x0U << ETH_DMABMR_PM_POS) /* Rx:Tx = 1:1 */
+#define ETH_DMABMR_PM_Rx2Tx1 (0x1U << ETH_DMABMR_PM_POS) /* Rx:Tx = 2:1 */
+#define ETH_DMABMR_PM_Rx3Tx1 (0x2U << ETH_DMABMR_PM_POS) /* Rx:Tx = 3:1 */
+#define ETH_DMABMR_PM_Rx4Tx1 (0x3U << ETH_DMABMR_PM_POS) /* Rx:Tx = 4:1 */
+/* RX DMA PBL Values */
+#define ETH_DMABMR_RDP_1BEAT (1U << ETH_DMABMR_RDP_POS)
+#define ETH_DMABMR_RDP_2BEATS (2U << ETH_DMABMR_RDP_POS)
+#define ETH_DMABMR_RDP_4BEATS (4U << ETH_DMABMR_RDP_POS)
+#define ETH_DMABMR_RDP_8BEATS (8U << ETH_DMABMR_RDP_POS)
+#define ETH_DMABMR_RDP_16BEATS (16U << ETH_DMABMR_RDP_POS)
+#define ETH_DMABMR_RDP_32BEATS (32U << ETH_DMABMR_RDP_POS)
+
+/* DMA Status Register (ETH_DMASR) Bits - Offset: 0x1014 */
+#define ETH_DMASR_TS \
+    (1U << 0) /* Transmit Status: Frame transmission completed */
+#define ETH_DMASR_TPSS \
+    (1U                \
+     << 1) /* Transmit Process Stopped Status: Tx DMA entered Stopped state */
+#define ETH_DMASR_TBUS                                                        \
+    (1U << 2) /* Transmit Buffer Unavailable Status: Next descriptor owned by \
+                 CPU */
+#define ETH_DMASR_TJTS \
+    (1U << 3) /* Transmit Jabber Timeout Status: Jabber timer expired */
+#define ETH_DMASR_ROS                                      \
+    (1U << 4) /* Receive Overflow Status: Rx FIFO overflow \
+               */
+#define ETH_DMASR_TUS                                                         \
+    (1U << 5) /* Transmit Underflow Status: Tx FIFO empty during transmission \
+               */
+#define ETH_DMASR_RS (1U << 6) /* Receive Status: Frame reception completed */
+#define ETH_DMASR_RBUS                                                       \
+    (1U << 7) /* Receive Buffer Unavailable Status: Next Rx descriptor owned \
+                 by CPU */
+#define ETH_DMASR_RPSS                                                        \
+    (1U << 8) /* Receive Process Stopped Status: Rx DMA entered Stopped state \
+               */
+#define ETH_DMASR_RWTS \
+    (1U << 9) /* Receive Watchdog Timeout Status: Watchdog timer expired */
+#define ETH_DMASR_ETS \
+    (1U << 10) /* Early Transmit Status: Tx frame moved to FIFO */
+#define ETH_DMASR_FBES \
+    (1U << 13) /* Fatal Bus Error Status: AHB error detected */
+#define ETH_DMASR_ERS \
+    (1U << 14) /* Early Receive Status: Rx frame moved to FIFO */
+#define ETH_DMASR_AIS                                                         \
+    (1U << 15) /* Abnormal Interrupt Summary: Logic OR of bits 1, 3, 4, 5, 7, \
+                  8, 9, 10, 13 */
+#define ETH_DMASR_NIS \
+    (1U << 16) /* Normal Interrupt Summary: Logic OR of bits 0, 2, 6, 14 */
+#define ETH_DMASR_RPS_POS 17 /* Receive Process State position */
+#define ETH_DMASR_RPS_MASK                                               \
+    (0x7U << ETH_DMASR_RPS_POS) /* Receive Process State Mask: Indicates \
+                                   current state of Rx DMA */
+#define ETH_DMASR_TPS_POS 20    /* Transmit Process State position */
+#define ETH_DMASR_TPS_MASK                                                \
+    (0x7U << ETH_DMASR_TPS_POS) /* Transmit Process State Mask: Indicates \
+                                   current state of Tx DMA */
+#define ETH_DMASR_EBS_POS 23    /* Error Bits Status position */
+#define ETH_DMASR_EBS_MASK                                                   \
+    (0x7U << ETH_DMASR_EBS_POS) /* Error Bits Status Mask: Indicates type of \
+                                   error that caused FBES */
+#define ETH_DMASR_MMCS \
+    (1U << 27) /* MMC Status: Indicates that a MMC counter event occurred */
+#define ETH_DMASR_PMTS \
+    (1U                \
+     << 28) /* PMT Status: Indicates that a power management event occurred */
+#define ETH_DMASR_TSTS                                                        \
+    (1U << 29) /* Time Stamp Trigger Status: Indicates that a timestamp event \
+                  occurred */
+/* --- Receive Process State (RPS) values --- */
+#define ETH_DMASR_RPS_STOPPED \
+    (0x0U << ETH_DMASR_RPS_POS) /* Stopped: Reset or Stop RX Command issued */
+#define ETH_DMASR_RPS_FETCH \
+    (0x1U << ETH_DMASR_RPS_POS) /* Fetching RX descriptor */
+#define ETH_DMASR_RPS_WAIT                            \
+    (0x3U << ETH_DMASR_RPS_POS) /* Waiting for packet \
+                                 */
+#define ETH_DMASR_RPS_SUSPENDED \
+    (0x4U << ETH_DMASR_RPS_POS) /* Suspended: RX Descriptor unavailable */
+#define ETH_DMASR_RPS_CLOSING \
+    (0x5U << ETH_DMASR_RPS_POS) /* Closing RX Descriptor */
+#define ETH_DMASR_RPS_TRANSFERRING                                            \
+    (0x7U << ETH_DMASR_RPS_POS) /* Transferring RX packet to Host buffer from \
+                                   receive buffer (RX FIFO) */
+/* --- Transmit Process State (TPS) values --- */
+#define ETH_DMASR_TPS_STOPPED \
+    (0x0U << ETH_DMASR_TPS_POS) /* Stopped: Reset or Stop TX Command issued */
+#define ETH_DMASR_TPS_FETCH \
+    (0x1U << ETH_DMASR_TPS_POS) /* Fetching TX descriptor */
+#define ETH_DMASR_TPS_WAIT                            \
+    (0x2U << ETH_DMASR_TPS_POS) /* Waiting for status \
+                                 */
+#define ETH_DMASR_TPS_READING                                                 \
+    (0x3U << ETH_DMASR_TPS_POS) /* Reading Data from host buffer and queue to \
+                                   TX buffer (TX FIFO) */
+#define ETH_DMASR_TPS_SUSPENDED                                               \
+    (0x6U << ETH_DMASR_TPS_POS) /* Suspended: TX Descriptor unavailable or TX \
+                                   FIFO underflow */
+#define ETH_DMASR_TPS_CLOSING \
+    (0x7U << ETH_DMASR_TPS_POS) /* Closing TX Descriptor */
+
+/* DMA Operation Mode Register (ETH_DMAOMR) Bits - Offset: 0x1018 */
+#define ETH_DMAOMR_SR \
+    (1U << 1) /* Start/Stop Receive: Enables the Receive DMA engine */
+#define ETH_DMAOMR_OSF                                                     \
+    (1U << 2) /* Operate on Second Frame: DMA processes second frame while \
+                 first is sending */
+#define ETH_DMAOMR_RTC_POS (3) /* Receive Threshold Control position */
+#define ETH_DMAOMR_RTC_MASK                                                \
+    (3U << ETH_DMAOMR_RTC_POS) /* Receive Threshold Control: FIFO level to \
+                                  start moving data to memory */
+#define ETH_DMAOMR_FUGF \
+    (1U << 6) /* Forward Undersized Good Frames: Forwards frames < 64 bytes */
+#define ETH_DMAOMR_FEF                                                        \
+    (1U << 7) /* Forward Error Frames: Forwards frames with error (CRC, etc.) \
+               */
+#define ETH_DMAOMR_ST \
+    (1U << 13) /* Start/Stop Transmit: Enables the Transmit DMA engine */
+#define ETH_DMAOMR_TTC_POS (14) /* Transmit Threshold Control position */
+#define ETH_DMAOMR_TTC_MASK                                                 \
+    (7U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: FIFO level to \
+                                  start transmission to PHY */
+#define ETH_DMAOMR_FTF \
+    (1U << 20) /* Flush Transmit FIFO: Resets the Tx FIFO pointers */
+#define ETH_DMAOMR_TSF                                                   \
+    (1U << 21) /* Transmit Store and Forward: Wait for full frame before \
+                  sending */
+#define ETH_DMAOMR_DFRF                                                       \
+    (1U << 24) /* Disable Flush Received Frames: Disables flushing of Rx FIFO \
+                */
+#define ETH_DMAOMR_RSF                                                         \
+    (1U << 25) /* Receive Store and Forward: Wait for full frame before moving \
+                  to RAM */
+#define ETH_DMAOMR_DTCEFD                                                    \
+    (1U << 26) /* Dropping of TCP/IP Checksum Error Frames Disable: Disables \
+                  dropping of frames with checksum errors */
+/* Receive Threshold Control Values */
+#define ETH_DMAOMR_RTC_64 \
+    (0U << ETH_DMAOMR_RTC_POS) /* Receive Threshold Control: 64 bytes */
+#define ETH_DMAOMR_RTC_32 \
+    (1U << ETH_DMAOMR_RTC_POS) /* Receive Threshold Control: 32 bytes */
+#define ETH_DMAOMR_RTC_96 \
+    (2U << ETH_DMAOMR_RTC_POS) /* Receive Threshold Control: 96 bytes */
+#define ETH_DMAOMR_RTC_128 \
+    (3U << ETH_DMAOMR_RTC_POS) /* Receive Threshold Control: 128 bytes */
+/* Transmit Threshold Control Values */
+#define ETH_DMAOMR_TTC_64 \
+    (0U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: 64 bytes */
+#define ETH_DMAOMR_TTC_128 \
+    (1U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: 128 bytes */
+#define ETH_DMAOMR_TTC_192 \
+    (2U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: 192 bytes */
+#define ETH_DMAOMR_TTC_256 \
+    (3U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: 256 bytes */
+#define ETH_DMAOMR_TTC_40 \
+    (4U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: 384 bytes */
+#define ETH_DMAOMR_TTC_32 \
+    (5U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: 512 bytes */
+#define ETH_DMAOMR_TTC_24 \
+    (6U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: 768 bytes */
+#define ETH_DMAOMR_TTC_16 \
+    (7U << ETH_DMAOMR_TTC_POS) /* Transmit Threshold Control: 768 bytes */
+
+/* DMA Interrupt Enable Register (ETH_DMAIER) Bits - Offset: 0x101C */
+#define ETH_DMAIER_TIE (1U << 0) /* Transmit Interrupt Enable */
+#define ETH_DMAIER_TPSIE \
+    (1U << 1) /* Transmit Process Stopped Interrupt Enable */
+#define ETH_DMAIER_TBUIE \
+    (1U << 2) /* Transmit Buffer Unavailable Interrupt Enable */
+#define ETH_DMAIER_TJTIE \
+    (1U << 3)                     /* Transmit Jabber Timeout Interrupt Enable */
+#define ETH_DMAIER_ROIE (1U << 4) /* Receive Overflow Interrupt Enable */
+#define ETH_DMAIER_TUIE (1U << 5) /* Transmit Underflow Interrupt Enable */
+#define ETH_DMAIER_RIE (1U << 6)  /* Receive Interrupt Enable */
+#define ETH_DMAIER_RBUIE \
+    (1U << 7) /* Receive Buffer Unavailable Interrupt Enable */
+#define ETH_DMAIER_RPSIE \
+    (1U << 8) /* Receive Process Stopped Interrupt Enable */
+#define ETH_DMAIER_RWTIE \
+    (1U << 9) /* Receive Watchdog Timeout Interrupt Enable */
+#define ETH_DMAIER_ETIE (1U << 10)  /* Early Transmit Interrupt Enable */
+#define ETH_DMAIER_FBEIE (1U << 13) /* Fatal Bus Error Interrupt Enable */
+#define ETH_DMAIER_ERIE (1U << 14)  /* Early Receive Interrupt Enable */
+#define ETH_DMAIER_AISE (1U << 15)  /* Abnormal Interrupt Summary Enable */
+#define ETH_DMAIER_NISE (1U << 16)  /* Normal Interrupt Summary Enable */
 
 #endif
